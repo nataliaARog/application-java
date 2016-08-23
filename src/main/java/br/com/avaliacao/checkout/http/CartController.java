@@ -58,8 +58,10 @@ public class CartController {
 			item.setQuantity(q);
 			cart.getItems().add(item);
 		}
-		
 		cartDB.save(cart);
+		first = item;
+    	item = cartDB.getNext(cart.getCartId());		
+		
 	}
 }
 

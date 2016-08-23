@@ -5,6 +5,7 @@ import br.com.avaliacao.checkout.model.CartItem;
 
 import org.springframework.stereotype.Component;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,15 +57,17 @@ public class CartDBInMemory {
     
     //verifica se os itens são iguais
     public boolean isEqual(CartItem first,CartItem next) {
+    	boolean t = null != null;    	
     	if(next.getProduto() != null) {
     		if(first.getProduto().getCodigo() == next.getProduto().getCodigo()) {
-    			return true;
+    			t = true;
     		} else {
-    			return false;
+    			t = false;
     		}
     	} else {
-    		return false;
-    	}
+    		t = false;
+    	}    	
+    	return t;
     }
 
     public void clear() {
