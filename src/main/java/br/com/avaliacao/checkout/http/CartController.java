@@ -12,32 +12,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/cart")
 public class CartController {
 
-    @Autowired
-    private CartDBInMemory cartDB;
+	@Autowired
+	private CartDBInMemory cartDB;
 
-    @RequestMapping(value = "/adicionar")
-    public void addToCart(String cartId, Integer q, String codeProduct, String nameProduct, String brand, Double price) {
-        Produto p = new Produto();
-        p.setCodigo(codeProduct);
-        p.setNome(nameProduct);
-        p.setMarca(brand);
-        p.setPreco(price);
+	@RequestMapping(value = "/adicionar")
+	public void addToCart(String cartId, Integer q, String codeProduct, String nameProduct, String brand, Double price) {
+		Produto p = new Produto();
+		p.setCodigo(codeProduct);
+		p.setNome(nameProduct);
+		p.setMarca(brand);
+		p.setPreco(price);
+		
+		CartItem item = cartDB.findOneItem(p.getCodigo(),cartId);
 
-        CartItem item = new CartItem();
-        item.setProduto(p);
-        item.setQuantity(q);
+		if(item.getProduto() != null && item.getProduto().getCodigo() != p.getCodigo()) {
+						
+		} else {
+			item = new CartItem();
+			item.setProduto(p);
+			item.setQuantity(q);
+		}
+		
+		
 
-        Cart cart = cartDB.findOne(cartId);
+		Cart cart = cartDB.findOne(cartId);
 
-        if (cart == null) {
-            cart = new Cart();
-            cart.setCartId(cartId);
-        } //ATENCAO: caso o carrinho ja exista, o fluxo atende?
+		//ATENCAO: caso o carrinho já exista, o fluxo atende? Esta parte do fluxo atendeu      
+		if (cart == null) {
+			cart = new Cart();
+			cart.setCartId(cartId);
+		}        
 
-        cart.getItems().add(item);
-        cartDB.save(cart);
-    }
-
-
+		cart.getItems().add(item);
+		cartDB.save(cart);
+	}
 }
 

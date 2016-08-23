@@ -10,7 +10,8 @@ public class CartItem {
         return quantity * produto.getPreco();
     }
 
-    //?
+    //chamado quando temos o mesmo id do produto
+    //apenas aumenta a quantidade
     public void incrementQuantity(final Integer quantity) {
         this.quantity += quantity;
     }
