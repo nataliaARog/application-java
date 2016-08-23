@@ -36,7 +36,7 @@ public class CartController {
 		first.setProduto(p);
 		first.setQuantity(q);
 		cart.getItems().add(first);
-		if(cartDB.findOne(cartId) == null) {
+		if(cartDB.findOne(cartId) == null && cartDB.findFirstItem(cart.getCartId()) == null) {
 			cartDB.save(cart);
 		}		
 		first = cartDB.findFirstItem(cart.getCartId());			
