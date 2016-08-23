@@ -23,17 +23,19 @@ public class CartController {
 		p.setMarca(brand);
 		p.setPreco(price);
 		
+		//verificação do item para au,entar ou não a quantidade e se adiciona novo itemao carrinho
 		CartItem item = cartDB.findOneItem(p.getCodigo(),cartId);
 
 		if(item.getProduto() != null && item.getProduto().getCodigo() != p.getCodigo()) {
-						
+			System.out.println("quantidade antes: "+item.getQuantity());
+			item.incrementQuantity(item.getQuantity());
+			System.out.println("quantidade depois: "+item.getQuantity());
+			
 		} else {
 			item = new CartItem();
 			item.setProduto(p);
 			item.setQuantity(q);
-		}
-		
-		
+		}		
 
 		Cart cart = cartDB.findOne(cartId);
 
