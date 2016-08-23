@@ -12,7 +12,8 @@ import java.util.Map;
 public class CartDBInMemory {
 
     private static Map<String, Cart> carts = new HashMap<>();
-
+    private int i = 1;
+    
     public Cart save(Cart cart) {
         carts.put(cart.getCartId(), cart);
         return cart;
@@ -28,6 +29,17 @@ public class CartDBInMemory {
     	CartItem item = new CartItem();
     	if(cart.getItems() != null && cart.getItems().size() > 1) {
     		item = cart.getItems().get(Integer.parseInt(codigo));
+    	}
+    	return item;
+    }
+    
+    public CartItem getNext(String id) {
+    	Cart cart = findOne(id);
+    	CartItem item;
+    	if(i == cart.getItems().size()) {
+    		item = new CartItem();
+    	} else {
+    		item = cart.getItems().get(i);
     	}
     	return item;
     }

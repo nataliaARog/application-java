@@ -43,16 +43,14 @@ public class CartController {
 		
 		CartItem item = new CartItem();
 		if(first != null) {			
-			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());			
+			item = cartDB.getNext(cart.getCartId());			
 		}		
 		
 		//se já existe um primeiro item, verificar se o próximo tem o mesmo código do produto
-		if(first.getProduto().getCodigo() == item.getProduto().getCodigo()) {
+		if(cartDB.isEqual(first, item)) {
 			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
 			item.incrementQuantity(item.getQuantity());
 			cart.getItems().remove(Integer.parseInt(item.getProduto().getCodigo()));
-			System.out.println("first: "+first.getProduto().getCodigo());
-			System.out.println("item: "+item.getProduto().getCodigo());
 
 		} else {
 			item = new CartItem();
