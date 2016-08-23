@@ -51,6 +51,8 @@ public class CartController {
 			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
 			item.incrementQuantity(item.getQuantity());
 			cart.getItems().remove(Integer.parseInt(item.getProduto().getCodigo()));
+			first = item;
+	    	item = cartDB.getNext(cart.getCartId());
 
 		} else {
 			item = new CartItem();
@@ -59,8 +61,7 @@ public class CartController {
 			cart.getItems().add(item);
 		}
 		cartDB.save(cart);
-		first = item;
-    	item = cartDB.getNext(cart.getCartId());		
+				
 		
 	}
 }
