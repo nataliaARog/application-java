@@ -50,6 +50,7 @@ public class CartController {
 		if(cartDB.isEqual(first, item)) {
 			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
 			item.incrementQuantity(item.getQuantity());
+			cart.getItems().remove(Integer.parseInt(item.getProduto().getCodigo()));
 
 		} else {
 			item = new CartItem();
