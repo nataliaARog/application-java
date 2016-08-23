@@ -25,7 +25,7 @@ public class CartDBInMemory {
     //necessário verificar se o item já existe
     public CartItem findOneItem(String codigo,String id) {
     	Cart cart = findOne(id);
-    	return cart.getItems().get(Integer.parseInt(codigo)-1);
+    	return cart.getItems().get(Integer.parseInt(codigo)-1) != null ? cart.getItems().get(Integer.parseInt(codigo)-1) : new CartItem();
     }
 
     public void clear() {
