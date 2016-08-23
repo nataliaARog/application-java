@@ -38,7 +38,7 @@ public class CartTest extends TestCase {
 		
 		for(int i=1;i<=CartDBInMemory.getCarts().size();i++) {
 			System.out.println("Cart Id: "+new CartDBInMemory().findOne(CartDBInMemory.getCarts().get(Integer.toString(i)).getCartId()).getCartId());
-			
+						
 			for(int j=0;j<new CartDBInMemory().findOne(CartDBInMemory.getCarts().get(Integer.toString(i)).getCartId()).getItems().size();j++) {
 				System.out.println("Item no carrinho (código do produto): "+new CartDBInMemory().findOne(CartDBInMemory.getCarts().get(Integer.toString(i)).getCartId()).getItems().get(j).getProduto().getCodigo());
 				System.out.println("Item no carrinho (quantidade de produtos neste item): "+new CartDBInMemory().findOne(CartDBInMemory.getCarts().get(Integer.toString(i)).getCartId()).getItems().get(j).getQuantity());

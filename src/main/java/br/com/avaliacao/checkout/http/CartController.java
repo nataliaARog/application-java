@@ -49,17 +49,15 @@ public class CartController {
 		//se já existe um primeiro item, verificar se o próximo tem o mesmo código do produto
 		if(cartDB.isEqual(first, item)) {
 			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
-			System.out.println("quantidade antes: "+item.getQuantity());
 			item.incrementQuantity(item.getQuantity());
-			System.out.println("quantidade depois: "+item.getQuantity());
 
 		} else {
 			item = new CartItem();
 			item.setProduto(p);
 			item.setQuantity(q);
-		}     
-
-		cart.getItems().add(item);
+			cart.getItems().add(item);
+		}
+		
 		cartDB.save(cart);
 	}
 }

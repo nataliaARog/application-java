@@ -26,8 +26,8 @@ public class CartDBInMemory {
     public CartItem findOneItem(String codigo,String id) {
     	Cart cart = findOne(id);
     	CartItem item = new CartItem();
-    	if(cart.getItems() != null) {
-    		item = cart.getItems().get(Integer.parseInt(codigo)-1);
+    	if(cart.getItems() != null && cart.getItems().size() > 1) {
+    		item = cart.getItems().get(Integer.parseInt(codigo));
     	}
     	return item;
     }
@@ -44,7 +44,7 @@ public class CartDBInMemory {
     
     //verifica se os itens são iguais
     public boolean isEqual(CartItem first,CartItem next) {
-    	if(next != null) {
+    	if(next.getProduto() != null) {
     		if(first.getProduto().getCodigo() == next.getProduto().getCodigo()) {
     			return true;
     		} else {
