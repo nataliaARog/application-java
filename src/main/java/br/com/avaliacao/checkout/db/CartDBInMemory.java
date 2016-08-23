@@ -25,7 +25,34 @@ public class CartDBInMemory {
     //necessário verificar se o item já existe
     public CartItem findOneItem(String codigo,String id) {
     	Cart cart = findOne(id);
-    	return cart.getItems().get(Integer.parseInt(codigo)-1) != null ? cart.getItems().get(Integer.parseInt(codigo)-1) : new CartItem();
+    	CartItem item = new CartItem();
+    	if(cart.getItems() != null) {
+    		item = cart.getItems().get(Integer.parseInt(codigo)-1);
+    	}
+    	return item;
+    }
+    
+    //necessário verificar se já possui o primeiro item
+    public CartItem findFirstItem(String id) {
+    	Cart cart = findOne(id); 
+    	CartItem item = new CartItem() ;
+    	if(cart.getItems() != null) {
+    		item = cart.getItems().get(0);
+    	}
+    	return item;
+    }
+    
+    //verifica se os itens são iguais
+    public boolean isEqual(CartItem first,CartItem next) {
+    	if(next != null) {
+    		if(first.getProduto().getCodigo() == next.getProduto().getCodigo()) {
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	} else {
+    		return false;
+    	}
     }
 
     public void clear() {

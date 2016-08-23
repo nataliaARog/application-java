@@ -22,20 +22,6 @@ public class CartController {
 		p.setNome(nameProduct);
 		p.setMarca(brand);
 		p.setPreco(price);
-		
-		//verificação do item para au,entar ou não a quantidade e se adiciona novo itemao carrinho
-		CartItem item = cartDB.findOneItem(p.getCodigo(),cartId);
-
-		if(item.getProduto() != null && item.getProduto().getCodigo() != p.getCodigo()) {
-			System.out.println("quantidade antes: "+item.getQuantity());
-			item.incrementQuantity(item.getQuantity());
-			System.out.println("quantidade depois: "+item.getQuantity());
-			
-		} else {
-			item = new CartItem();
-			item.setProduto(p);
-			item.setQuantity(q);
-		}		
 
 		Cart cart = cartDB.findOne(cartId);
 
@@ -43,7 +29,35 @@ public class CartController {
 		if (cart == null) {
 			cart = new Cart();
 			cart.setCartId(cartId);
-		}        
+		}  
+
+		//verificação do item para aumentar ou não a quantidade e se adiciona novo itemao carrinho
+		CartItem first = new CartItem();
+		first.setProduto(p);
+		first.setQuantity(q);
+		cart.getItems().add(first);
+		if(cartDB.findOne(cartId) == null) {
+			cartDB.save(cart);
+		}		
+		first = cartDB.findFirstItem(cart.getCartId());			
+		
+		CartItem item = new CartItem();
+		if(first != null) {
+			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
+		}
+		
+		//se já existe um primeiro item, verificar se o próximo tem o mesmo código do produto
+		if(cartDB.isEqual(first, item)) {
+			item = cartDB.findOneItem(p.getCodigo(),cart.getCartId());
+			System.out.println("quantidade antes: "+item.getQuantity());
+			item.incrementQuantity(item.getQuantity());
+			System.out.println("quantidade depois: "+item.getQuantity());
+
+		} else {
+			item = new CartItem();
+			item.setProduto(p);
+			item.setQuantity(q);
+		}     
 
 		cart.getItems().add(item);
 		cartDB.save(cart);
